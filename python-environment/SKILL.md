@@ -13,6 +13,35 @@ description: 使用或執行 Python、建立 / 修改 Python 專案、處理 ven
 - 使用 `conda activate` 前，先確認目標環境名稱與專案既有設定，不任意建立或切換環境。
 - 不在系統 Python 中任意安裝套件。
 
+## Python 版本要求
+
+- 開始 Python 相關工作前，先確認專案的 Python 版本要求，來源依序為
+  `pyproject.toml`、`.python-version`、`runtime.txt`、README、既有環境。
+- 實際使用的直譯器必須確認：
+  - Anaconda / conda 環境名稱與實際路徑（不得硬套固定路徑）。
+  - venv / .venv 是否啟用。
+  - 執行 `python --version`（或 `python -V`）取得實際版本。
+- 無法確認版本時，明確說明不確定，不猜測、不捏造版本號。
+
+## requirements（必要）
+
+- Python 專案必須維護 `requirements.txt`（或 `pyproject.toml`、lockfile）。
+  - 新專案建立時，應同時建立 `requirements.txt`。
+  - 依賴變更、套件升級或環境異動後，一併同步更新。
+- 產出方式：以實際環境 `pip freeze` 產出完整清單，或列出主要直接依賴（含版本），
+  並標註產生方式與時間。
+- 不得以「小程式、測試用途、只有 venv」為由省略 `requirements.txt`。
+- 需自訂 index 的套件（如 `torch==X.X+cuXXX`），
+  於 requirements.txt 或 README 中註明對應 `--index-url`。
+
+## 環境不符時的處理
+
+- 當既有環境與專案需求不符（Python 版本、套件版本、缺套件）時，
+  不得自行決定新增環境或修改既有環境，必須先詢問使用者：
+  - A. 新增環境（新建 conda env / venv，較不影響既有專案）。
+  - B. 修改既有環境（pip install / 升級，可能影響其他專案）。
+- 詢問時同時說明兩者的影響範圍與取捨，等使用者確認後才執行。
+
 ## 安裝套件
 
 - 新增套件前確認是否真的需要；能用既有套件解決時，不增加依賴。
