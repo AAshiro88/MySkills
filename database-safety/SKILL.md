@@ -19,13 +19,17 @@ description: 撰寫、修改或執行 SQL、Stored Procedure、ORM 查詢、Data
 ### 備份規則
 
 - 備份範圍必須與修改範圍一致：使用與修改相同的 WHERE 條件；`DROP`、`TRUNCATE`、Schema 變更、無條件或大範圍操作則備份整張表（含結構）。
-- 備份指令依專案實際使用的 DBMS 撰寫，不假設版本或語法；DBMS 不明時先詢問。常見寫法：
-  - SQL Server：`SELECT * INTO <table>_bak_<yyyyMMdd_HHmm> FROM <table> WHERE ...`
-  - MySQL / PostgreSQL / Oracle：`CREATE TABLE <table>_bak_<yyyyMMdd_HHmm> AS SELECT * FROM <table> WHERE ...`
+- 備份位置提供兩種方式，讓使用者選擇：
+  - **本機備份**：將受影響的資料匯出成備份檔存放本機（例如 dump、CSV、`.bak`），並在回覆中告知檔案路徑。
+  - **資料庫暫存表**：於原本資料庫建立暫存備份表。常見寫法：
+    - SQL Server：`SELECT * INTO <table>_bak_<yyyyMMdd_HHmm> FROM <table> WHERE ...`
+    - MySQL / PostgreSQL / Oracle：`CREATE TABLE <table>_bak_<yyyyMMdd_HHmm> AS SELECT * FROM <table> WHERE ...`
+- **預設機制**：使用者未指定備份位置時，一律備份到**本機**；使用者明確指定時，依其要求選擇資料庫暫存表或其他方式。
+- 備份指令依專案實際使用的 DBMS 撰寫，不假設版本或語法；DBMS 不明時先詢問。
 - 備份表命名需含來源表名與時間，避免覆蓋既有備份，並與既有物件不衝突。
 - 表內備份無法防範整個資料庫損毀；`DROP`、`TRUNCATE`、大量刪除、Schema 變更等不可逆或大範圍操作，建議額外做資料庫層級備份或匯出，並說明原因。
 - 若以程式碼（例如 Python）提供，備份步驟必須寫在同一支程式中、先於修改執行，且備份失敗時中止，不得繼續修改。
-- 備份含正式資料時，留在原本的資料庫 / 環境內，不複製到本機、測試環境或第三方服務（見 `AGENTS.md` 的 Secret 與資料外傳規則）。
+- 本機備份含正式資料時，僅依使用者指定存放，不轉傳到測試環境或第三方服務（見 `AGENTS.md` 的 Secret 與資料外傳規則）。
 - 備份不屬於「暫存內容」：不得依 `AGENTS.md` 的暫存清除規則自動刪除備份表或備份檔，由使用者決定何時刪除；回覆中告知備份的名稱與位置。
 
 ### 例外
