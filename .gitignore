@@ -1,12 +1,38 @@
-# 白名單模式：預設全部忽略，只保留 Skill 必要檔
+# 黑名單模式：預設追蹤所有檔案，僅排除暫存與系統垃圾檔
 # 放在 skills/ 目錄下使用
+# 各 Skill 目錄內檔名重複且含大量附属檔（reference、guides、prompts 等），
+# 白名單需逐一維護且易漏、無法覆蓋同名子目錄檔案，故改用黑名單，
+# 新增的垃圾檔類型應在此追加，而非反向維護白名單。
 
-# 忽略全部（含 OS / 編輯器 / Python 等暫存檔，不需逐一列出）
-*
-# 但允許進入所有目錄，才能找到下層的白名單檔案
-!*/
-# 白名單本身也要保留才能追蹤
-!.gitignore
-# 只保留 Skill 必要檔
-!SKILL.md
-!README.md
+# 排除整個 Skill 目錄
+pdf-to-text/
+okf-bundle-generator/
+
+# Git 內部目錄
+.git/
+
+# 作業系統垃圾檔
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Office 與編輯器暫存、備份檔
+~$*
+*.bak
+*.swp
+*.swo
+*~
+*.tmp
+
+# Python 暫存
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node 暫存
+node_modules/
+
+# 記錄檔
+*.log
