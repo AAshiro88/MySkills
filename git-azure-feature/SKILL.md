@@ -19,7 +19,7 @@ description: 當使用者要新增功能並推送到 Azure DevOps 時，依照�
 
 - 本機已 clone 專案，且遠端名稱通常為 `origin`（Azure DevOps 遠端）。
 - 使用者已有對 Azure DevOps 遠端的讀寫權限。
-- 新分支名稱建議使用 `feature/xxx`、`bugfix/xxx` 或 `hotfix/xxx` 格式（例如 `feature/order-export`、`bugfix/close-xls`）。
+- 新分支名稱建議使用 `feature/xxx`、`bugfix/xxx` 格式（例如 `feature/order-export`、`bugfix/close-xls`）。
 
 ## 操作步驟
 
